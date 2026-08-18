@@ -8,6 +8,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class Program {
     void main(){
@@ -25,8 +26,29 @@ public class Program {
 
         double total = ps.totalValue(products);
         NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        System.out.println(formatoMoeda.format(total));
+        System.out.println("Total value: " + formatoMoeda.format(total) + "\n");
+
+        List<String> names = products.stream()
+                .filter(p -> p.getQuantity() < 10)
+                .map(p -> p.getName())
+                .sorted()
+                .collect(Collectors.toList());
+
+        names.forEach(System.out::println);
+
+
+
+
 
 
     }
 }
+
+
+/*
+
+    ```java
+List<String> names = list.stream().map(p -> p.getName().toUpperCase()).collect(Collectors.toList());
+
+
+ */
