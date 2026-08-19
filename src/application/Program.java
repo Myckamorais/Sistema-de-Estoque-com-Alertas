@@ -8,6 +8,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Program {
@@ -36,6 +37,14 @@ public class Program {
 
         names.forEach(System.out::println);
 
+        Map<CategoriaEnum, Integer> quantidadePorCategoria = products.stream()
+                .collect(Collectors.groupingBy(
+                        Product::getCategoria,
+                        Collectors.summingInt(Product::getQuantity)
+                ));
+
+        System.out.println("\n" + quantidadePorCategoria);
+
 
 
 
@@ -43,12 +52,3 @@ public class Program {
 
     }
 }
-
-
-/*
-
-    ```java
-List<String> names = list.stream().map(p -> p.getName().toUpperCase()).collect(Collectors.toList());
-
-
- */
