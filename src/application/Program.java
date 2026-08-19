@@ -5,10 +5,7 @@ import enums.CategoriaEnum;
 import service.ProductService;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Program {
@@ -27,7 +24,7 @@ public class Program {
 
         double total = ps.totalValue(products);
         NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        System.out.println("Total value: " + formatoMoeda.format(total) + "\n");
+        System.out.println("=== VALOR TOTAL EM ESTOQUE === \n" + formatoMoeda.format(total) + "\n");
 
         List<String> names = products.stream()
                 .filter(p -> p.getQuantity() < 10)
@@ -35,6 +32,7 @@ public class Program {
                 .sorted()
                 .collect(Collectors.toList());
 
+        System.out.println("=== ESTOQUE BAIXO (< 10 unidades) ===");
         names.forEach(System.out::println);
 
         Map<CategoriaEnum, Integer> quantidadePorCategoria = products.stream()
@@ -43,7 +41,21 @@ public class Program {
                         Collectors.summingInt(Product::getQuantity)
                 ));
 
-        System.out.println("\n" + quantidadePorCategoria);
+        System.out.println("\n=== QUANTIDADE POR CATEGORIA ===\n" + quantidadePorCategoria + "\n");
+
+        Product expensiveProduct = products.stream()
+                .max(Comparator.comparingDouble(Product::getPriceUnit))
+                .orElse(null);
+
+        System.out.println("=== PRODUTO MAIS CARO ===\n"
+                            + expensiveProduct.getName()
+                            + " - "
+                            + String.format("%.2f", expensiveProduct.getPriceUnit()));
+
+
+
+
+
 
 
 
