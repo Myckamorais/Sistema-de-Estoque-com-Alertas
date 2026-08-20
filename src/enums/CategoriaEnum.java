@@ -2,7 +2,7 @@ package enums;
 
 public enum CategoriaEnum {
 
-    ACCESSORIOS,
+    ACESSORIOS,
     ELETRONICOS,
     PERIFERICOS;
 }
